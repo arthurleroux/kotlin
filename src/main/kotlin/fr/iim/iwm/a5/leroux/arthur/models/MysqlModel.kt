@@ -65,4 +65,11 @@ class MysqlModel(url: String, user: String?, password: String?) : Model {
         }
         return comments
     }
+
+    override fun insertComment(article_id: Int, text: String) {
+        connectionPool.use { connection ->
+            val stmt = connection.prepareStatement("INSERT INTO comments (article_id, text) VALUES (article_id, text)")
+            val results = stmt.execute()
+        }
+    }
 }

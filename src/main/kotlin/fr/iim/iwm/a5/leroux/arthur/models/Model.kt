@@ -7,4 +7,5 @@ interface Model {
     fun getArticleList(): List<Article>
     fun getArticle(id: Int): Article?
     fun getComments(article_id: Int): List<Comment>
+    fun insertComment(article_id: Int, text: String)
 }
