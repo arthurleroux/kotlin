@@ -77,7 +77,7 @@ class MysqlModel(url: String, user: String?, password: String?) : Model {
 
     override fun insertArticle(title: String, text: String) {
         connectionPool.use { connection ->
-            val stmt = connection.prepareStatement("INSERT INTO article (article_id, text) VALUES (?, ?)")
+            val stmt = connection.prepareStatement("INSERT INTO articles (title, text) VALUES (?, ?)")
             stmt.setString(1, title)
             stmt.setString(2, text)
             stmt.executeUpdate()
