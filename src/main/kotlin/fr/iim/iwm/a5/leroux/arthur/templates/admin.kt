@@ -16,7 +16,7 @@ fun HTML.adminTemplate(articles: List<Article>) {
                     +it.title
                 }
                 span {+ " | " }
-                a(href = "/admin/articles/${it.id}/delete") {
+                a(href = "/admin/article/${it.id}/delete") {
                     text(" [supprimer]")
                 }
             }
