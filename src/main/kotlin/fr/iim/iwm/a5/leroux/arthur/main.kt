@@ -53,7 +53,7 @@ fun Application.cmsApp(
                     call.respond(content)
                 }
 
-                route("/article") {
+                route("/articles") {
                     post("/add") {
                         val requestBody = call.receiveParameters()
                         val title = requestBody["title"]
@@ -64,26 +64,12 @@ fun Application.cmsApp(
                         call.respondRedirect("/admin")
                     }
 
-                    get("/{id}") {
-                        val id = call.parameters["id"]!!.toInt()
-                        val content = articleController.adminStartHD(id)
-                        call.respond(content)
-                    }
-
-                    get("}/{id}/delete") {
-                        val id = call.parameters["id"]!!.toInt()
-                        articleController.deleteArticle(id)
+                    get("/{article_id}/delete") {
+                        val article_id = call.parameters["article_id"]!!.toInt()
+                        articleController.deleteArticle(article_id)
                         call.respondRedirect("/admin")
                     }
                 }
-
-                get("/article/{article_id}/comment/{comment_id}/delete") {
-                    val article_id = call.parameters["article_id"]!!.toInt()
-                    val comment_id = call.parameters["comment_id"]!!.toInt()
-                    articleController.deleteArticle(comment_id)
-                    call.respondRedirect("/admin/article/$article_id")
-                }
-
 
             }
         }

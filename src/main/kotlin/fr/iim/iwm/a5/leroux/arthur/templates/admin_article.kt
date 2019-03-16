@@ -19,7 +19,7 @@ fun HTML.adminArticleTemplate(article: Article, comments: List<Comment>) {
                 li {
                     +it.text!!
                     span {+ " | " }
-                    a(href = "/admin/comment/${it.id}/delete") {
+                    a(href = "/admin/comment/${article.id}/${it.id}/delete") {
                         text(" [supprimer]")
                     }
                 }
