@@ -18,7 +18,7 @@ fun HTML.ArticleTemplate(article: Article, comments: List<Comment>) {
             }
         }
 
-        form(action = "/comment/add", encType = FormEncType.multipartFormData,
+        form(action = "/comments/add", encType = FormEncType.multipartFormData,
             method = FormMethod.post) {
             textInput(name = "text")
             hiddenInput{name = "article_id"; value = article.id.toString()}

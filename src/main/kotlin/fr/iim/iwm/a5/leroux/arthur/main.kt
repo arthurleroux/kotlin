@@ -9,6 +9,7 @@ import io.ktor.application.install
 import io.ktor.freemarker.FreeMarker
 import io.ktor.request.receiveParameters
 import io.ktor.response.respond
+import io.ktor.response.respondRedirect
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.routing
@@ -40,13 +41,12 @@ fun Application.cmsApp(
 
         post("/comments/add") {
             val requestBody = call.receiveParameters()
-            val text = requestBody["test"]
+            val text = requestBody["text"]
             val article_id = requestBody["article_id"]
 
             val result = commentController.insertComment(article_id!!.toInt(), text.toString())
-          
-            val content = articleController.startHD(article_id.toInt())
-            call.respond(content)
+
+            call.respondRedirect("/article/$article_id")
         }
 
 
