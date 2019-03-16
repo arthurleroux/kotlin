@@ -6,12 +6,16 @@ import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.auth.*
 import io.ktor.freemarker.FreeMarker
+import io.ktor.http.content.PartData
+import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveParameters
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
 import io.ktor.routing.get
 import io.ktor.routing.post
+import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -27,7 +31,31 @@ fun Application.cmsApp(
         templateLoader = ClassTemplateLoader(App::class.java.classLoader, "templates")
     }
 
+    install(Authentication) {
+        basic(name = "admin") {
+            realm = "Ktor Server"
+            validate { credentials ->
+                if (credentials.name == "arthur" && credentials.password == "leroux") {
+                    UserIdPrincipal(credentials.name)
+                } else {
+                    null
+                }
+            }
+        }
+    }
+    
     routing {
+
+        authenticate("admin") {
+            route("/admin") {
+                get("/") {
+                    val content = articleListController.startHD()
+                    call.respond(content)
+                }
+
+            }
+        }
+
         get("/") {
             val content = articleListController.startHD()
             call.respond(content)
