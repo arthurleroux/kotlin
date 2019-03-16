@@ -4,7 +4,7 @@ import fr.iim.iwm.a5.leroux.arthur.data.Article
 import fr.iim.iwm.a5.leroux.arthur.data.Comment
 import kotlinx.html.*
 
-fun HTML.articleTemplate(article: Article, comments: List<Comment>) {
+fun HTML.adminArticleTemplate(article: Article, comments: List<Comment>) {
     head{
         title(article.title)
     }
@@ -16,7 +16,13 @@ fun HTML.articleTemplate(article: Article, comments: List<Comment>) {
         h2{+"Commentaires:"}
         ul {
             comments.forEach{
-                li { +it.text!! }
+                li {
+                    +it.text!!
+                    span {+ " | " }
+                    a(href = "/admin/comment/${it.id}/delete") {
+                        text(" [supprimer]")
+                    }
+                }
             }
         }
 

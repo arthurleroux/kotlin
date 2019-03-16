@@ -49,9 +49,41 @@ fun Application.cmsApp(
         authenticate("admin") {
             route("/admin") {
                 get("/") {
-                    val content = articleListController.startHD()
+                    val content = articleListController.adminStartHD()
                     call.respond(content)
                 }
+
+                route("/article") {
+                    post("/add") {
+                        val requestBody = call.receiveParameters()
+                        val title = requestBody["title"]
+                        val text = requestBody["text"]
+
+                        articleController.insertArticle(title.toString(), text.toString())
+
+                        call.respondRedirect("/admin")
+                    }
+
+                    get("/{id}") {
+                        val id = call.parameters["id"]!!.toInt()
+                        val content = articleController.adminStartHD(id)
+                        call.respond(content)
+                    }
+
+                    get("}/{id}/delete") {
+                        val id = call.parameters["id"]!!.toInt()
+                        articleController.deleteArticle(id)
+                        call.respondRedirect("/admin")
+                    }
+                }
+
+                get("/article/{article_id}/comment/{comment_id}/delete") {
+                    val article_id = call.parameters["article_id"]!!.toInt()
+                    val comment_id = call.parameters["comment_id"]!!.toInt()
+                    articleController.deleteArticle(comment_id)
+                    call.respondRedirect("/admin/article/$article_id")
+                }
+
 
             }
         }
@@ -72,7 +104,7 @@ fun Application.cmsApp(
             val text = requestBody["text"]
             val article_id = requestBody["article_id"]
 
-            val result = commentController.insertComment(article_id!!.toInt(), text.toString())
+            commentController.insertComment(article_id!!.toInt(), text.toString())
 
             call.respondRedirect("/article/$article_id")
         }

@@ -8,4 +8,6 @@ interface Model {
     fun getArticle(id: Int): Article?
     fun getComments(article_id: Int): List<Comment>
     fun insertComment(article_id: Int, text: String)
+    fun insertArticle(title: String, text: String)
+    fun deleteArticle(id: Int): Any
 }

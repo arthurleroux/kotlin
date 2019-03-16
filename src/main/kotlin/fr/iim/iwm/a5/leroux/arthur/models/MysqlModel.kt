@@ -71,7 +71,31 @@ class MysqlModel(url: String, user: String?, password: String?) : Model {
             val stmt = connection.prepareStatement("INSERT INTO comments (article_id, text) VALUES (?, ?)")
             stmt.setInt(1, article_id)
             stmt.setString(2, text)
-            val results = stmt.executeUpdate()
+            stmt.executeUpdate()
+        }
+    }
+
+    override fun insertArticle(title: String, text: String) {
+        connectionPool.use { connection ->
+            val stmt = connection.prepareStatement("INSERT INTO article (article_id, text) VALUES (?, ?)")
+            stmt.setString(1, title)
+            stmt.setString(2, text)
+            stmt.executeUpdate()
+        }
+    }
+
+    override fun deleteArticle(id: Int) {
+        connectionPool.use {connection ->
+            val stmt = connection.prepareStatement("DELETE FROM comments where article_id = ?")
+            stmt.setInt(1, id)
+            stmt.executeUpdate()
+
+        }
+        connectionPool.use {connection ->
+            val stmt = connection.prepareStatement("DELETE FROM articles where id = ? ")
+            stmt.setInt(1, id)
+            stmt.executeUpdate()
+
         }
     }
 }
