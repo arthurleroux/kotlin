@@ -89,13 +89,19 @@ class MysqlModel(url: String, user: String?, password: String?) : Model {
             val stmt = connection.prepareStatement("DELETE FROM comments where article_id = ?")
             stmt.setInt(1, id)
             stmt.executeUpdate()
-
         }
         connectionPool.use {connection ->
             val stmt = connection.prepareStatement("DELETE FROM articles where id = ? ")
             stmt.setInt(1, id)
             stmt.executeUpdate()
+        }
+    }
 
+    override fun deleteComment(id: Int) {
+        connectionPool.use {connection ->
+            val stmt = connection.prepareStatement("DELETE FROM comments where id = ?")
+            stmt.setInt(1, id)
+            stmt.executeUpdate()
         }
     }
 }

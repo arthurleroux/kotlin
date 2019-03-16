@@ -77,6 +77,13 @@ fun Application.cmsApp(
                     }
                 }
 
+                get("/comment/{article_id}/{id}/delete") {
+                    val article_id = call.parameters["article_id"]!!.toInt()
+                    val id = call.parameters["id"]!!.toInt()
+                    commentController.deleteComment(id)
+                    call.respondRedirect("/admin/article/$article_id")
+                }
+
             }
         }
 

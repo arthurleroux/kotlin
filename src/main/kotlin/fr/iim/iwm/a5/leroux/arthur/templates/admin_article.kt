@@ -25,15 +25,5 @@ fun HTML.adminArticleTemplate(article: Article, comments: List<Comment>) {
                 }
             }
         }
-
-        h2{+"Ajouter un commentaire:"}
-        form(action = "/comments/add",
-            encType = FormEncType.multipartFormData,
-            method = FormMethod.post) {
-            textArea { name = "text"; required = true ; placeholder = "Texte"}
-            hiddenInput{name = "article_id"; value = article.id.toString()}
-            br
-            submitInput()
-        }
     }
 }

@@ -10,4 +10,5 @@ interface Model {
     fun insertComment(article_id: Int, text: String)
     fun insertArticle(title: String, text: String)
     fun deleteArticle(id: Int): Any
+    fun deleteComment(id: Int): Any
 }
