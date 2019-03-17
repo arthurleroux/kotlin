@@ -8,8 +8,6 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.*
 import io.ktor.freemarker.FreeMarker
-import io.ktor.http.content.PartData
-import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveParameters
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
@@ -107,8 +105,6 @@ fun Application.cmsApp(
 
             call.respondRedirect("/article/$article_id")
         }
-
-
     }
 }
 
